@@ -28,7 +28,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           # registry/repository-name
-          images: ${{ steps.login-ecr.outputs.registry }}/kuankm/flask-app-m3.4
+          images: ${{ steps.login-ecr.outputs.registry }}/kuankm/flask-app-m3.5
         
           tags: |
             type=sha
