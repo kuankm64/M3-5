@@ -1,4 +1,4 @@
-name: Build and Push to Amazon ECR
+name: Build and Push to Private Amazon ECR
 
 on:
   push:
@@ -17,8 +17,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          
+          aws-region: ap-southeast-1 # Hardcoded to match your registry location
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -28,9 +27,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          # registry/repository-name
-          images: ${{ steps.login-ecr.outputs.registry }}/kuankm/flask-app-m3.5
-        
+          # Using your exact repository path
+          images: 255945442255.dkr.ecr.ap-southeast-1.amazonaws.com/kuankm-flask-xray-repo
           tags: |
             type=sha
             type=raw,value=latest
@@ -42,3 +40,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
